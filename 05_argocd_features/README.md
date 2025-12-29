@@ -52,3 +52,12 @@ These include **Projects, App of Apps, Multi-cluster management, ApplicationSets
 ---
 
 Happy Learning!
+
+
+
+
+BUILT-IN DEPLOYMENT
+kubectl apply → API Server → Deployment stored → Deployment controller → Pods created
+
+CUSTOM RESOURCE (Application)
+kubectl apply → API Server → Application stored → Argo CD controller → Deployments/Pods created
