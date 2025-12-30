@@ -67,9 +67,9 @@ echo "⏳ Checking if ArgoCD CLI is installed..."
 if ! command -v argocd &> /dev/null
 then
     echo "🚀 Installing ArgoCD CLI (Ubuntu)..."
-    curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-    sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
-    rm argocd-linux-amd64
+    curl -sSL -o argocd-linux-arm64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-arm64
+    sudo install -m 555 argocd-linux-arm64 /usr/local/bin/argocd
+    rm argocd-linux-arm64
     echo "✅ ArgoCD CLI installed successfully."
 else
     echo "✅ ArgoCD CLI already installed."
