@@ -62,15 +62,34 @@ kubectl apply -n $NAMESPACE \
   -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 # ---------------------------
-# Install ArgoCD CLI (Ubuntu only)
+# Auto-detect System Architecture
+# ---------------------------
+echo "🔍 Auto-detecting system architecture..."
+ARCH=$(uname -m)
+case $ARCH in
+    x86_64)
+        ARGOCD_ARCH="amd64"
+        ;;
+    aarch64|arm64)
+        ARGOCD_ARCH="arm64"
+        ;;
+    *)
+        echo "❌ Unsupported architecture: $ARCH"
+        exit 1
+        ;;
+esac
+echo "✅ Detected architecture: $ARGOCD_ARCH"
+
+# ---------------------------
+# Install ArgoCD CLI
 # ---------------------------
 echo "⏳ Checking if ArgoCD CLI is installed..."
 if ! command -v argocd &> /dev/null
 then
-    echo "🚀 Installing ArgoCD CLI (Ubuntu)..."
-    curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-    sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
-    rm argocd-linux-amd64
+    echo "🚀 Installing ArgoCD CLI for $ARGOCD_ARCH..."
+    curl -sSL -o argocd-linux-$ARGOCD_ARCH https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-$ARGOCD_ARCH
+    sudo install -m 555 argocd-linux-$ARGOCD_ARCH /usr/local/bin/argocd
+    rm argocd-linux-$ARGOCD_ARCH
     echo "✅ ArgoCD CLI installed successfully."
 else
     echo "✅ ArgoCD CLI already installed."
